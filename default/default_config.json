@@ -5,8 +5,8 @@
   "bio": "Python Developer",
   "introduction_file": "Introduction.md",
   "theme": {
-    "primary_color": "#6a11cb",
-    "secondary_color": "#2575fc",
+    "primary_color": "#FF6B9D",
+    "secondary_color": "#F8D7DA",
     "dark_primary_color": "#a855f7",
     "dark_secondary_color": "#60a5fa"
   },
