@@ -18,6 +18,11 @@
     "overlay_color": "#f3f4f6",
     "dark_overlay_color": "#121212"
   },
+  "social_links": {
+    "twitter": "https://twitter.com/username",
+    "linkedin": "https://linkedin.com/in/username",
+    "instagram": "https://instagram.com/username"
+  },
   "contact": {
     "qq": "https://qm.qq.com/q/c7DY18rEju",
     "wechat": "",
