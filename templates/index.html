@@ -842,10 +842,12 @@
             
             // 点击标题打开模态对话框（带动画）
             projectsHeader.addEventListener('click', () => {
+                // 先显示遮罩层
                 projectTypeModal.classList.remove('hidden');
+                // 然后延迟显示模态框，创建遮罩先出现的效果
                 setTimeout(() => {
                     projectTypeModal.classList.add('modal-enter');
-                }, 10);
+                }, 50);
             });
             
             // 关闭模态对话框（带动画）
