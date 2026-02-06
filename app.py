@@ -730,6 +730,9 @@ def index():
             github_info_data = get_github_project_info(project['github_repo'])
             if github_info_data:
                 enhanced_project.update(github_info_data)
+                # 保留原始的GitHub描述信息
+                if github_info_data.get('description'):
+                    enhanced_project['github_description'] = github_info_data['description']
                 # 如果配置中没有描述，则使用GitHub仓库的描述
                 if not project.get('description') and github_info_data.get('description'):
                     enhanced_project['description'] = github_info_data['description']

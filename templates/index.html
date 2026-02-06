@@ -644,7 +644,7 @@
                                             
                                             {# 显示配置中的标签 #}
                                             {% if project.github_repo %}
-                                                <a href="https://github.com/{{ project.github_repo }}" target="_blank" rel="noopener noreferrer" class="px-2 py-0.5 bg-blue-200 dark:bg-blue-600 rounded-full text-blue-800 dark:text-blue-200 hover:bg-blue-300 dark:hover:bg-blue-500 transition-colors tooltip" title="{{ project.description if project.description else 'GitHub Repository' }}">
+                                                <a href="https://github.com/{{ project.github_repo }}" target="_blank" rel="noopener noreferrer" class="px-2 py-0.5 bg-blue-200 dark:bg-blue-600 rounded-full text-blue-800 dark:text-blue-200 hover:bg-blue-300 dark:hover:bg-blue-500 transition-colors tooltip" title="{{ project.github_description if project.github_description else (project.description if project.description else 'GitHub Repository') }}">
                                                     <i class="fa-brands fa-github mr-1"></i>GitHub
                                                 </a>
                                             {% endif %}
