@@ -729,12 +729,18 @@ def index():
         if 'github_repo' in project and project['github_repo']:
             github_info_data = get_github_project_info(project['github_repo'])
             if github_info_data:
-                enhanced_project.update(github_info_data)
                 # 保留原始的GitHub描述信息
                 if github_info_data.get('description'):
                     enhanced_project['github_description'] = github_info_data['description']
+                # 先保存配置文件中的描述（如果有）
+                config_description = project.get('description')
+                # 更新项目信息，但保留配置文件中的描述优先
+                enhanced_project.update(github_info_data)
+                # 如果配置文件中有描述，则优先使用配置文件的描述
+                if config_description:
+                    enhanced_project['description'] = config_description
                 # 如果配置中没有描述，则使用GitHub仓库的描述
-                if not project.get('description') and github_info_data.get('description'):
+                elif github_info_data.get('description'):
                     enhanced_project['description'] = github_info_data['description']
         enhanced_online_projects.append(enhanced_project)
     
