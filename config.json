@@ -26,20 +26,28 @@
   },
   "deployed_projects": [
     {
-      "name": "示例项目1",
-      "description": "这是一个已部署的项目示例，可在配置文件中添加您的部署项目",
-      "url": "https://example.com",
-      "tags": ["Web", "Flask", "Python"],
-      "deployed_date": "2024-01-01",
-      "comment": "这里可以添加项目注释"
+      "name": "在线商城系统",
+      "description": "基于Flask开发的全功能电商网站，支持商品管理、订单处理和支付集成",
+      "url": "https://demo-store.example.com",
+      "tags": ["Python", "Flask", "MySQL", "Bootstrap"],
+      "deployed_date": "2024-01-15",
+      "comment": "生产环境部署，日均访问量5000+"
     },
     {
-      "name": "示例项目2", 
-      "description": "另一个已部署的项目示例",
-      "url": "https://example2.com",
-      "tags": ["React", "JavaScript"],
-      "deployed_date": "2024-02-15",
-      "comment": "这里是第二个项目的注释"
+      "name": "个人博客平台", 
+      "description": "响应式个人博客系统，支持Markdown编辑和多用户管理",
+      "url": "https://myblog.example.com",
+      "tags": ["React", "Node.js", "MongoDB"],
+      "deployed_date": "2024-02-20",
+      "comment": "使用Docker容器化部署"
+    },
+    {
+      "name": "数据分析仪表板",
+      "description": "实时数据可视化仪表板，支持多种图表类型和数据源接入",
+      "url": "https://dashboard.example.com",
+      "tags": ["Vue.js", "D3.js", "Python", "PostgreSQL"],
+      "deployed_date": "2024-03-10",
+      "comment": "集成了机器学习模型预测功能"
     }
   ]
 }

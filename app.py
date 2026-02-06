@@ -660,6 +660,9 @@ def get_local_readme():
 def index():
     github_info = get_github_user_info()
     
+    # 获取配置中的已部署项目
+    deployed_projects = config.get('deployed_projects', [])
+    
     # 检查背景图片是否存在
     background_image = config.get('background', {}).get('image', 'background.png')
     
@@ -688,6 +691,7 @@ def index():
     return render_template('index.html', 
                           github_info=github_info, 
                           config=config,
+                          deployed_projects=deployed_projects,
                           now=datetime.now(),
                           background_exists=background_exists,
                           background_path=background_path)
