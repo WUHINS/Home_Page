@@ -66,6 +66,13 @@
       "url": "https://hagp.hinswu.cc.cd/",
       "github_repo": "QuantumNous/new-api",
       "icon": "http-icon"
+    },
+    {
+      "name": "个人书签页",
+      "description": "个人网页书签集成管理",
+      "url": "https://onenav.hinswu.dpdns.org/",
+      "github_repo": "helloxz/onenav",
+      "icon": "http-icon"
     }
   ]
 }
