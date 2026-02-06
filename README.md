@@ -89,24 +89,21 @@ bash deploy.sh install
       "description": "基于Flask开发的全功能电商网站，支持商品管理、订单处理和支付集成",
       "url": "https://demo-store.example.com",
       "github_repo": "username/ecommerce-store",
-      "deployed_date": "2024-01-15",
-      "comment": "生产环境部署，日均访问量5000+"
+      "icon": "fa-solid fa-shopping-cart"
     },
     {
       "name": "个人博客平台", 
       "description": "响应式个人博客系统，支持Markdown编辑和多用户管理",
       "url": "https://myblog.example.com",
       "github_repo": "username/personal-blog",
-      "deployed_date": "2024-02-20",
-      "comment": "使用Docker容器化部署"
+      "icon": "https://example.com/blog-icon.png"
     },
     {
       "name": "数据分析仪表板",
       "description": "实时数据可视化仪表板，支持多种图表类型和数据源接入",
       "url": "https://dashboard.example.com",
       "github_repo": "username/data-dashboard",
-      "deployed_date": "2024-03-10",
-      "comment": "集成了机器学习模型预测功能"
+      "icon": "fa-solid fa-chart-line"
     }
   ]
 }
@@ -140,8 +137,7 @@ bash deploy.sh run
 - **项目描述**：简要介绍项目功能和特色
 - **在线链接**：提供项目访问入口
 - **GitHub仓库**：链接到项目源码
-- **部署日期**：记录项目上线时间
-- **备注信息**：添加额外的技术细节或说明
+- **图标配置**：支持 Font Awesome 图标类名或自定义图片URL
 
 ## 🚢 部署指南
 

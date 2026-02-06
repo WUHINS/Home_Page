@@ -1,7 +1,7 @@
 {
-  "github_url": "https://github.com/WUHINS",
+ "github_url": "https://github.com/example",
   "dark_mode": "auto",
-  "name": "WUHINS",
+  "name": "Example User",
   "bio": "Python Developer",
   "introduction_file": "Introduction.md",
   "theme": {
@@ -30,16 +30,14 @@
       "description": "这是一个在线项目示例，项目技术栈将从GitHub获取",
       "url": "https://example.com",
       "github_repo": "username/repository",
-      "deployed_date": "2024-01-01",
-      "comment": "这里可以添加项目注释"
+      "icon": "fa-solid fa-globe"
     },
     {
       "name": "示例在线项目2", 
       "description": "另一个在线项目示例",
       "url": "https://example2.com",
       "github_repo": "username/repository2",
-      "deployed_date": "2024-02-15",
-      "comment": "这里是第二个项目的注释"
+      "icon": "https://example.com/icon.png"
     }
   ]
 }
