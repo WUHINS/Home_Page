@@ -497,106 +497,115 @@
 
                 <!-- 项目展示 -->
                 <div id="projects-section" class="glass-panel bg-white/30 dark:bg-gray-800/30 rounded-2xl shadow-xl p-6 mt-6 card-hover animate-fade-in" style="animation-delay: 0.4s;">
-                    <h2 class="text-2xl font-bold mb-4 flex items-center">
+                    <h2 id="projects-header" class="text-2xl font-bold mb-4 flex items-center cursor-pointer hover:opacity-80">
                         <i class="fa-solid fa-folder-tree text-primary dark:text-primary-dark mr-2"></i>
-                        项目展示
+                        <span id="current-project-type">项目展示</span>
+                        <i class="fa-solid fa-chevron-down ml-2 text-sm"></i>
                     </h2>
-                    <div class="space-y-4">
-                        {% if github_info.recent_repos or online_projects %}
-                            <!-- 最近项目 -->
-                            {% if github_info.recent_repos %}
-                                <div class="mb-6">
-                                    <h3 class="text-lg font-semibold mb-3 flex items-center">
-                                        <i class="fa-solid fa-folder-open text-primary dark:text-primary-dark mr-2"></i>
-                                        最近项目
-                                    </h3>
-                                    <div class="space-y-4">
-                                        {% for repo in github_info.recent_repos %}
-                                            <a href="{{ repo.html_url }}" target="_blank" rel="noopener noreferrer" class="block p-4 bg-gray-50 dark:bg-gray-700 rounded-xl repo-item hover:bg-gray-100 dark:hover:bg-gray-600">
-                                                <div class="flex justify-between items-start mb-2">
-                                                    <h3 class="text-lg font-semibold text-primary dark:text-primary-dark">{{ repo.name }}</h3>
-                                                    <span class="text-sm text-gray-500 dark:text-gray-400 flex items-center">
-                                                        <i class="fa-solid fa-star mr-1"></i>
-                                                        {{ repo.stargazers_count }}
-                                                    </span>
-                                                </div>
-                                                <p class="text-gray-600 dark:text-gray-400 text-sm mb-2">{{ repo.description }}</p>
-                                                <div class="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400">
-                                                    <span>{{ repo.language }}</span>
-                                                    <span class="update-date" data-date="{{ repo.pushed_at }}">更新于 {{ repo.pushed_at[:10] if repo.pushed_at else '未知' }}</span>
-                                                </div>
-                                            </a>
-                                        {% endfor %}
+                    <div id="recent-projects-content" class="space-y-4">
+                        {% if github_info.recent_repos %}
+                            {% for repo in github_info.recent_repos %}
+                                <a href="{{ repo.html_url }}" target="_blank" rel="noopener noreferrer" class="block p-4 bg-gray-50 dark:bg-gray-700 rounded-xl repo-item hover:bg-gray-100 dark:hover:bg-gray-600">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h3 class="text-lg font-semibold text-primary dark:text-primary-dark">{{ repo.name }}</h3>
+                                        <span class="text-sm text-gray-500 dark:text-gray-400 flex items-center">
+                                            <i class="fa-solid fa-star mr-1"></i>
+                                            {{ repo.stargazers_count }}
+                                        </span>
                                     </div>
-                                </div>
-                            {% endif %}
-                            
-                            <!-- 在线项目 -->
-                            {% if online_projects %}
-                                <div>
-                                    <h3 class="text-lg font-semibold mb-3 flex items-center">
-                                        <i class="fa-solid fa-cloud text-primary dark:text-primary-dark mr-2"></i>
-                                        在线项目
-                                    </h3>
-                                    <div class="space-y-4">
-                                        {% for project in online_projects %}
-                                            <div class="block p-4 bg-gray-50 dark:bg-gray-700 rounded-xl repo-item hover:bg-gray-100 dark:hover:bg-gray-600">
-                                                <div class="flex justify-between items-start mb-2">
-                                                    {% if project.url %}
-                                                    <a href="{{ project.url }}" target="_blank" rel="noopener noreferrer" class="text-lg font-semibold text-primary dark:text-primary-dark hover:underline">
-                                                        {{ project.name }}
-                                                    </a>
-                                                    {% else %}
-                                                    <h3 class="text-lg font-semibold text-primary dark:text-primary-dark">{{ project.name }}</h3>
-                                                    {% endif %}
-                                                    {% if project.stars %}
-                                                    <span class="text-sm text-gray-500 dark:text-gray-400 flex items-center">
-                                                        <i class="fa-solid fa-star mr-1"></i>
-                                                        {{ project.stars }}
-                                                    </span>
-                                                    {% elif project.deployed_date %}
-                                                    <span class="text-sm text-gray-500 dark:text-gray-400">
-                                                        <i class="fa-solid fa-calendar-check mr-1"></i>
-                                                        {{ project.deployed_date }}
-                                                    </span>
-                                                    {% endif %}
-                                                </div>
-                                                <p class="text-gray-600 dark:text-gray-400 text-sm mb-2">{{ project.description }}</p>
-                                                <div class="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400">
-                                                    <div class="flex flex-wrap gap-1">
-                                                        {# 显示从GitHub获取的语言信息 #}
-                                                        {% if project.languages %}
-                                                            {% for lang in project.languages %}
-                                                                <span class="px-2 py-0.5 bg-gray-200 dark:bg-gray-600 rounded-full">{{ lang }}</span>
-                                                            {% endfor %}
-                                                        {% elif project.language %}
-                                                            <span class="px-2 py-0.5 bg-gray-200 dark:bg-gray-600 rounded-full">{{ project.language }}</span>
-                                                        {% endif %}
-                                                        
-                                                        {# 显示配置中的标签 #}
-                                                        {% if project.github_repo %}
-                                                            <span class="px-2 py-0.5 bg-blue-200 dark:bg-blue-600 rounded-full text-blue-800 dark:text-blue-200">
-                                                                <i class="fa-brands fa-github mr-1"></i>GitHub
-                                                            </span>
-                                                        {% endif %}
-                                                    </div>
-                                                    {% if project.comment %}
-                                                    <span title="{{ project.comment }}" class="cursor-help">
-                                                        <i class="fa-solid fa-comment text-xs"></i>
-                                                    </span>
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-                                        {% endfor %}
+                                    <p class="text-gray-600 dark:text-gray-400 text-sm mb-2">{{ repo.description }}</p>
+                                    <div class="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400">
+                                        <span>{{ repo.language }}</span>
+                                        <span class="update-date" data-date="{{ repo.pushed_at }}">更新于 {{ repo.pushed_at[:10] if repo.pushed_at else '未知' }}</span>
                                     </div>
-                                </div>
-                            {% endif %}
+                                </a>
+                            {% endfor %}
                         {% else %}
                             <div class="p-6 text-center text-gray-500 dark:text-gray-400">
                                 <i class="fa-solid fa-folder-open text-4xl mb-3"></i>
-                                <p>暂无项目数据</p>
+                                <p>暂无最近项目</p>
                             </div>
                         {% endif %}
+                    </div>
+                    <div id="online-projects-content" class="space-y-4" style="display: none;">
+                        {% if online_projects %}
+                            {% for project in online_projects %}
+                                <div class="block p-4 bg-gray-50 dark:bg-gray-700 rounded-xl repo-item hover:bg-gray-100 dark:hover:bg-gray-600">
+                                    <div class="flex justify-between items-start mb-2">
+                                        {% if project.url %}
+                                        <a href="{{ project.url }}" target="_blank" rel="noopener noreferrer" class="text-lg font-semibold text-primary dark:text-primary-dark hover:underline">
+                                            {{ project.name }}
+                                        </a>
+                                        {% else %}
+                                        <h3 class="text-lg font-semibold text-primary dark:text-primary-dark">{{ project.name }}</h3>
+                                        {% endif %}
+                                        {% if project.stars %}
+                                        <span class="text-sm text-gray-500 dark:text-gray-400 flex items-center">
+                                            <i class="fa-solid fa-star mr-1"></i>
+                                            {{ project.stars }}
+                                        </span>
+                                        {% elif project.deployed_date %}
+                                        <span class="text-sm text-gray-500 dark:text-gray-400">
+                                            <i class="fa-solid fa-calendar-check mr-1"></i>
+                                            {{ project.deployed_date }}
+                                        </span>
+                                        {% endif %}
+                                    </div>
+                                    <p class="text-gray-600 dark:text-gray-400 text-sm mb-2">{{ project.description }}</p>
+                                    <div class="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400">
+                                        <div class="flex flex-wrap gap-1">
+                                            {# 显示从GitHub获取的语言信息 #}
+                                            {% if project.languages %}
+                                                {% for lang in project.languages %}
+                                                    <span class="px-2 py-0.5 bg-gray-200 dark:bg-gray-600 rounded-full">{{ lang }}</span>
+                                                {% endfor %}
+                                            {% elif project.language %}
+                                                <span class="px-2 py-0.5 bg-gray-200 dark:bg-gray-600 rounded-full">{{ project.language }}</span>
+                                            {% endif %}
+                                            
+                                            {# 显示配置中的标签 #}
+                                            {% if project.github_repo %}
+                                                <span class="px-2 py-0.5 bg-blue-200 dark:bg-blue-600 rounded-full text-blue-800 dark:text-blue-200">
+                                                    <i class="fa-brands fa-github mr-1"></i>GitHub
+                                                </span>
+                                            {% endif %}
+                                        </div>
+                                        {% if project.comment %}
+                                        <span title="{{ project.comment }}" class="cursor-help">
+                                            <i class="fa-solid fa-comment text-xs"></i>
+                                        </span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="p-6 text-center text-gray-500 dark:text-gray-400">
+                                <i class="fa-solid fa-cloud text-4xl mb-3"></i>
+                                <p>暂无在线项目</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- 项目类型选择模态对话框 -->
+                <div id="project-type-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-md mx-4 glass-panel">
+                        <h3 class="text-xl font-bold mb-4 text-center">选择项目类型</h3>
+                        <div class="space-y-3">
+                            <button id="show-recent-projects-btn" class="w-full p-4 bg-gray-100 dark:bg-gray-700 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors flex items-center justify-between">
+                                <span class="font-medium">最近项目</span>
+                                <i class="fa-solid fa-folder-open text-primary dark:text-primary-dark"></i>
+                            </button>
+                            <button id="show-online-projects-btn" class="w-full p-4 bg-gray-100 dark:bg-gray-700 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors flex items-center justify-between">
+                                <span class="font-medium">在线项目</span>
+                                <i class="fa-solid fa-cloud text-primary dark:text-primary-dark"></i>
+                            </button>
+                        </div>
+                        <div class="mt-6 text-center">
+                            <button id="close-modal-btn" class="px-4 py-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+                                取消
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -790,6 +799,51 @@
                 observer.observe(card);
             });
             
+            // 项目类型切换功能
+            const projectsHeader = document.getElementById('projects-header');
+            const recentProjectsContent = document.getElementById('recent-projects-content');
+            const onlineProjectsContent = document.getElementById('online-projects-content');
+            const currentProjectType = document.getElementById('current-project-type');
+            const projectTypeModal = document.getElementById('project-type-modal');
+            const showRecentProjectsBtn = document.getElementById('show-recent-projects-btn');
+            const showOnlineProjectsBtn = document.getElementById('show-online-projects-btn');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+            
+            // 点击标题打开模态对话框
+            projectsHeader.addEventListener('click', () => {
+                projectTypeModal.classList.remove('hidden');
+            });
+            
+            // 关闭模态对话框
+            function closeProjectTypeModal() {
+                projectTypeModal.classList.add('hidden');
+            }
+            
+            // 显示最近项目
+            showRecentProjectsBtn.addEventListener('click', () => {
+                recentProjectsContent.style.display = 'block';
+                onlineProjectsContent.style.display = 'none';
+                currentProjectType.textContent = '最近项目';
+                closeProjectTypeModal();
+            });
+            
+            // 显示在线项目
+            showOnlineProjectsBtn.addEventListener('click', () => {
+                recentProjectsContent.style.display = 'none';
+                onlineProjectsContent.style.display = 'block';
+                currentProjectType.textContent = '在线项目';
+                closeProjectTypeModal();
+            });
+            
+            // 点击取消关闭模态对话框
+            closeModalBtn.addEventListener('click', closeProjectTypeModal);
+            
+            // 点击背景关闭模态对话框
+            projectTypeModal.addEventListener('click', (e) => {
+                if (e.target === projectTypeModal) {
+                    closeProjectTypeModal();
+                }
+            });
         });
     </script>
 </body>
