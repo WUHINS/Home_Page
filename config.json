@@ -26,28 +26,25 @@
   },
   "online_projects": [
     {
-      "name": "在线商城系统",
+      "name": "H-Monitor Pro",
       "description": "基于Flask开发的全功能电商网站，支持商品管理、订单处理和支付集成",
-      "url": "https://demo-store.example.com",
+      "url": "https://hmp-cfsaas.hinswu.cc.cd",
       "github_repo": "username/ecommerce-store",
-      "deployed_date": "2024-01-15",
-      "comment": "生产环境部署，日均访问量5000+"
+      "icon": "fa-solid fa-chart-line"
     },
     {
-      "name": "个人博客平台", 
+      "name": "H-Sentry Pro", 
       "description": "响应式个人博客系统，支持Markdown编辑和多用户管理",
-      "url": "https://myblog.example.com",
+      "url": "https://hsp.hinswu.cc.cd",
       "github_repo": "username/personal-blog",
-      "deployed_date": "2024-02-20",
-      "comment": "使用Docker容器化部署"
+      "icon": "fa-solid fa-blog"
     },
     {
-      "name": "数据分析仪表板",
+      "name": "H-File Gateway",
       "description": "实时数据可视化仪表板，支持多种图表类型和数据源接入",
-      "url": "https://dashboard.example.com",
+      "url": "https://openlist-cfsaas.hinswu.cc.cd",
       "github_repo": "username/data-dashboard",
-      "deployed_date": "2024-03-10",
-      "comment": "集成了机器学习模型预测功能"
+      "icon": "fa-solid fa-cloud-arrow-up"
     }
   ]
 }

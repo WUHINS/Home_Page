@@ -564,21 +564,24 @@
                                 <div class="block p-4 bg-gray-50 dark:bg-gray-700 rounded-xl repo-item hover:bg-gray-100 dark:hover:bg-gray-600">
                                     <div class="flex justify-between items-start mb-2">
                                         {% if project.url %}
-                                        <a href="{{ project.url }}" target="_blank" rel="noopener noreferrer" class="text-lg font-semibold text-primary dark:text-primary-dark hover:underline">
+                                        <a href="{{ project.url }}" target="_blank" rel="noopener noreferrer" class="text-lg font-semibold text-primary dark:text-primary-dark hover:underline flex items-center">
+                                            {% if project.icon %}
+                                            <i class="{{ project.icon }} mr-2 text-primary dark:text-primary-dark"></i>
+                                            {% endif %}
                                             {{ project.name }}
                                         </a>
                                         {% else %}
-                                        <h3 class="text-lg font-semibold text-primary dark:text-primary-dark">{{ project.name }}</h3>
+                                        <h3 class="text-lg font-semibold text-primary dark:text-primary-dark flex items-center">
+                                            {% if project.icon %}
+                                            <i class="{{ project.icon }} mr-2 text-primary dark:text-primary-dark"></i>
+                                            {% endif %}
+                                            {{ project.name }}
+                                        </h3>
                                         {% endif %}
                                         {% if project.stars %}
                                         <span class="text-sm text-gray-500 dark:text-gray-400 flex items-center">
                                             <i class="fa-solid fa-star mr-1"></i>
                                             {{ project.stars }}
-                                        </span>
-                                        {% elif project.deployed_date %}
-                                        <span class="text-sm text-gray-500 dark:text-gray-400">
-                                            <i class="fa-solid fa-calendar-check mr-1"></i>
-                                            {{ project.deployed_date }}
                                         </span>
                                         {% endif %}
                                     </div>
@@ -601,11 +604,6 @@
                                                 </span>
                                             {% endif %}
                                         </div>
-                                        {% if project.comment %}
-                                        <span title="{{ project.comment }}" class="cursor-help">
-                                            <i class="fa-solid fa-comment text-xs"></i>
-                                        </span>
-                                        {% endif %}
                                     </div>
                                 </div>
                             {% endfor %}
