@@ -656,12 +656,71 @@ def get_local_readme():
     # 如果都没有，返回默认信息
     return "<p>这个人很懒，什么都没有留下～</p>"
 
+def get_github_project_info(github_repo):
+    """从GitHub API获取项目信息"""
+    if not github_repo:
+        return None
+    
+    try:
+        print(f"获取GitHub项目信息: {github_repo}")
+        
+        # 分割仓库地址
+        parts = github_repo.split('/')
+        if len(parts) < 2:
+            return None
+        
+        owner = parts[0]
+        repo = parts[1]
+        
+        # 获取仓库信息
+        repo_response = make_github_request(f'https://api.github.com/repos/{owner}/{repo}')
+        
+        if repo_response.status_code == 200:
+            repo_data = repo_response.json()
+            
+            # 获取仓库的语言信息
+            languages_response = make_github_request(repo_data['languages_url'])
+            languages = []
+            if languages_response.status_code == 200:
+                languages_data = languages_response.json()
+                # 获取使用最多的几种语言
+                sorted_languages = sorted(languages_data.items(), key=lambda x: x[1], reverse=True)
+                languages = [lang for lang, _ in sorted_languages[:3]]  # 取前3种语言
+            
+            return {
+                'stars': repo_data.get('stargazers_count', 0),
+                'forks': repo_data.get('forks_count', 0),
+                'description': repo_data.get('description', ''),
+                'language': repo_data.get('language', ''),
+                'languages': languages,
+                'updated_at': repo_data.get('updated_at', ''),
+                'html_url': repo_data.get('html_url', ''),
+                'topics': repo_data.get('topics', [])
+            }
+    except Exception as e:
+        print(f"获取GitHub项目信息时出错: {e}")
+    
+    return None
+
 @app.route('/')
 def index():
     github_info = get_github_user_info()
     
-    # 获取配置中的已部署项目
-    deployed_projects = config.get('deployed_projects', [])
+    # 获取配置中的在线项目
+    online_projects = config.get('online_projects', [])
+    
+    # 为在线项目获取GitHub信息
+    enhanced_online_projects = []
+    for project in online_projects:
+        enhanced_project = project.copy()
+        if 'github_repo' in project and project['github_repo']:
+            github_info_data = get_github_project_info(project['github_repo'])
+            if github_info_data:
+                enhanced_project.update(github_info_data)
+                # 如果配置中没有描述，则使用GitHub仓库的描述
+                if not project.get('description') and github_info_data.get('description'):
+                    enhanced_project['description'] = github_info_data['description']
+        enhanced_online_projects.append(enhanced_project)
     
     # 检查背景图片是否存在
     background_image = config.get('background', {}).get('image', 'background.png')
@@ -691,7 +750,7 @@ def index():
     return render_template('index.html', 
                           github_info=github_info, 
                           config=config,
-                          deployed_projects=deployed_projects,
+                          online_projects=enhanced_online_projects,
                           now=datetime.now(),
                           background_exists=background_exists,
                           background_path=background_path)
