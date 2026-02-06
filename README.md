@@ -4,7 +4,6 @@
 
 <img width="1280" height="700" alt="image" src="https://github.com/user-attachments/assets/7d394bbd-c4ed-4398-a551-104237f90c4e" />
 
-
 ## 🚀 功能特点
 
 - ✨ **美观界面设计**：采用二次元+科技+渐变风格，支持自适应深色/浅色模式切换
@@ -16,6 +15,7 @@
 - 📝 **技术栈展示**：自动分析并展示您常用的编程语言和技术
 - 🔄 **最近项目展示**：自动获取并展示您最近有更新的 GitHub 项目
 - 📜 **个性化介绍**：灵活的个人介绍内容配置方式
+- 🌐 **在线项目展示**：展示您的在线项目和部署的应用
 
 ## 🛠️ 技术栈
 
@@ -38,7 +38,7 @@
 
 ```bash
 # 克隆仓库到本地
-git clone https://github.com/SRInternet/Home_Page.git
+git clone https://github.com/WUHINS/Home_Page.git
 cd Home_Page
 ```
 
@@ -65,8 +65,50 @@ bash deploy.sh install
   "introduction_file": "Introduction.md",
   "theme": {
     "primary_color": "#6a11cb",
-    "secondary_color": "#2575fc"
-  }
+    "secondary_color": "#2575fc",
+    "dark_primary_color": "#a855f7",
+    "dark_secondary_color": "#60a5fa"
+  },
+  "background": {
+    "image": "background.jpg",
+    "blur": 4,
+    "overlay_opacity": 0.6,
+    "overlay_color": "#f3f4f6",
+    "dark_overlay_color": "#121212"
+  },
+  "contact": {
+    "qq": "https://qm.qq.com/q/c7DY18rEju",
+    "wechat": "",
+    "bilibili": "https://space.bilibili.com/1969160969",
+    "douyin": "https://www.douyin.com/user/MS4wLjABAAAATzdjtBBrLLCn69TtPMeseuEUzztbNZzw-9f13adrfiM?relation=0&vid=7143257533807873316",
+    "xiaohongshu": "https://www.xiaohongshu.com/user/profile/6427cf87000000002901166e?xsec_token=YBcPhyaU45_o0XD1fWkS2AJAoXOxWm09mZUN0iNRSVK3E%3D&xsec_source=app_share&xhsshare=CopyLink&shareRedId=ODo0N0ZLPEA2NzUyOTgwNjg8OTg1OzxO&apptime=1760733353&share_id=f252abf542b54551b1c018c51f4a64c8&share_channel=copy_link"
+  },
+  "online_projects": [
+    {
+      "name": "在线商城系统",
+      "description": "基于Flask开发的全功能电商网站，支持商品管理、订单处理和支付集成",
+      "url": "https://demo-store.example.com",
+      "github_repo": "username/ecommerce-store",
+      "deployed_date": "2024-01-15",
+      "comment": "生产环境部署，日均访问量5000+"
+    },
+    {
+      "name": "个人博客平台", 
+      "description": "响应式个人博客系统，支持Markdown编辑和多用户管理",
+      "url": "https://myblog.example.com",
+      "github_repo": "username/personal-blog",
+      "deployed_date": "2024-02-20",
+      "comment": "使用Docker容器化部署"
+    },
+    {
+      "name": "数据分析仪表板",
+      "description": "实时数据可视化仪表板，支持多种图表类型和数据源接入",
+      "url": "https://dashboard.example.com",
+      "github_repo": "username/data-dashboard",
+      "deployed_date": "2024-03-10",
+      "comment": "集成了机器学习模型预测功能"
+    }
+  ]
 }
 ```
 
@@ -90,6 +132,17 @@ bash deploy.sh run
 2. **本地 Introduction.md**：直接修改项目根目录下的 Introduction.md 文件
 3. **配置文件指定**：在 config.json 中修改 `introduction_file` 字段，指向您自定义的 Markdown 文件
 
+## 🌐 在线项目展示
+
+通过 `online_projects` 配置，您可以展示您的在线项目：
+
+- **项目名称**：清晰展示项目标题
+- **项目描述**：简要介绍项目功能和特色
+- **在线链接**：提供项目访问入口
+- **GitHub仓库**：链接到项目源码
+- **部署日期**：记录项目上线时间
+- **备注信息**：添加额外的技术细节或说明
+
 ## 🚢 部署指南
 
 ### 方法一：使用 Vercel/Netlify 部署
@@ -106,7 +159,6 @@ bash deploy.sh run
 python build_static.py
 
 # 添加生成的文件并提交
-
 git add index.html background.jpg
 
 git commit -m 'Update static website'
@@ -167,6 +219,25 @@ GitHub Actions 配置文件可参考[个人项目主页](https://github.com/SRIn
 - `theme`：主题配色方案配置
   - `primary_color`：主色调（用于按钮、重点内容等）
   - `secondary_color`：辅助色调（用于渐变、次要强调等）
+  - `dark_primary_color`：深色模式主色调
+  - `dark_secondary_color`：深色模式辅助色调
+- `background`：背景图片和视觉效果配置
+  - `image`：背景图片文件名
+  - `blur`：背景模糊程度
+  - `overlay_opacity`：覆盖层透明度
+  - `overlay_color`：浅色模式覆盖层颜色
+  - `dark_overlay_color`：深色模式覆盖层颜色
+- `contact`：联系方式配置，支持多种社交平台
+- `online_projects`：在线项目列表，展示您的部署项目
+
+## 📞 联系方式
+
+通过配置文件中的联系信息，您可以方便地展示各种社交平台链接：
+- QQ
+- 微信
+- Bilibili
+- 抖音
+- 小红书
 
 ## 🔧 开发指南
 
@@ -178,3 +249,7 @@ GitHub Actions 配置文件可参考[个人项目主页](https://github.com/SRIn
 ## 📝 License
 
 [MIT](LICENSE)
+
+## 🤝 贡献
+
+欢迎提交 Issue 和 Pull Request 来改进这个项目！
