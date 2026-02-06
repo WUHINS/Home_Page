@@ -29,7 +29,7 @@
       "name": "在线商城系统",
       "description": "基于Flask开发的全功能电商网站，支持商品管理、订单处理和支付集成",
       "url": "https://demo-store.example.com",
-      "github_repo": "username/ecommerce-store",  // GitHub仓库地址，用于获取项目信息
+      "github_repo": "username/ecommerce-store",
       "deployed_date": "2024-01-15",
       "comment": "生产环境部署，日均访问量5000+"
     },
@@ -37,7 +37,7 @@
       "name": "个人博客平台", 
       "description": "响应式个人博客系统，支持Markdown编辑和多用户管理",
       "url": "https://myblog.example.com",
-      "github_repo": "username/personal-blog",  // GitHub仓库地址，用于获取项目信息
+      "github_repo": "username/personal-blog",
       "deployed_date": "2024-02-20",
       "comment": "使用Docker容器化部署"
     },
@@ -45,7 +45,7 @@
       "name": "数据分析仪表板",
       "description": "实时数据可视化仪表板，支持多种图表类型和数据源接入",
       "url": "https://dashboard.example.com",
-      "github_repo": "username/data-dashboard",  // GitHub仓库地址，用于获取项目信息
+      "github_repo": "username/data-dashboard",
       "deployed_date": "2024-03-10",
       "comment": "集成了机器学习模型预测功能"
     }
