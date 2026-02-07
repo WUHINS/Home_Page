@@ -53,23 +53,21 @@ jobs:
       - name: Prepare output directory
         run: |
           mkdir -p output
-          cp index.html output/ || echo "index.html not found, continuing..."
           
-          # 复制所有图片文件
-          if [ -f "background.jpg" ]; then
-            cp background.jpg output/
-          fi
+          # 复制整个项目目录到输出目录（排除.git目录）
+          rsync -av --exclude='.git' --exclude='output' . output/ || echo "rsync failed, using cp instead"
           
-          # 复制images目录（如果存在）
-          if [ -d "images" ]; then
-            mkdir -p output/images
-            cp -r images/* output/images/ || echo "No images found, continuing..."
-          fi
-          
-          # 复制games目录（如果存在）
-          if [ -d "games" ]; then
-            mkdir -p output/games
-            cp -r games/* output/games/ || echo "No games found, continuing..."
+          # 如果rsync失败，使用cp命令
+          if [ ! -f "output/index.html" ]; then
+            echo "使用cp命令复制文件..."
+            # 复制所有文件（排除.git和output目录）
+            find . -maxdepth 1 -type f -not -name '.git*' -not -name 'output' -exec cp {} output/ \; || true
+            # 复制所有目录（排除.git和output）
+            for dir in */; do
+              if [ "$dir" != ".git/" ] && [ "$dir" != "output/" ]; then
+                cp -r "$dir" output/ || true
+              fi
+            done
           fi
 
       # 6. 设置GitHub Pages
