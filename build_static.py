@@ -148,6 +148,30 @@ if portrait_image:
         except Exception as e:
             print(f"复制竖屏背景图片时出错: {e}")
 
+# 复制游戏详情文件
+print("正在复制游戏详情文件...")
+if 'games' in config:
+    for game in config['games']:
+        if 'details_file' in game and game['details_file']:
+            details_file_path = os.path.join(here, game['details_file'])
+            if os.path.exists(details_file_path):
+                # 解析路径，如果文件在子目录中
+                file_dir, file_filename = os.path.split(game['details_file'])
+                if file_dir:  # 如果路径包含子目录
+                    dst = os.path.join(static_dir, file_dir)
+                    os.makedirs(dst, exist_ok=True)
+                    dst_file = os.path.join(dst, file_filename)
+                else:  # 如果路径在根目录
+                    dst_file = os.path.join(static_dir, game['details_file'])
+                
+                try:
+                    shutil.copy2(details_file_path, dst_file)
+                    print(f"已复制游戏详情文件: {game['details_file']}")
+                except Exception as e:
+                    print(f"复制游戏详情文件时出错: {e}")
+            else:
+                print(f"警告：游戏详情文件不存在: {game['details_file']}")
+
 print("\n静态文件构建完成！")
 print(f"\n静态HTML文件已生成在项目根目录: {os.path.join(static_dir, 'index.html')}")
 print(f"\n如何部署到GitHub Pages:")
