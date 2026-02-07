@@ -967,131 +967,66 @@
             let currentGameIndex = 0;
             const games = {{ config.games | tojson }};
             
-            // 初始化游戏轮播
+            // 初始化游戏滑动选择器
             function initGameCarousel() {
                 gameCarouselContainer.innerHTML = '';
                 
-                // 创建循环的游戏项（复制首尾元素以实现无缝循环）
-                const totalGames = games.length;
-                
-                // 添加末尾元素到开头（用于循环）
-                for (let i = totalGames - 2; i < totalGames; i++) {
-                    if (i >= 0) {
-                        createGameItem(i, i - totalGames);
-                    }
-                }
-                
-                // 添加正常顺序的游戏项
                 games.forEach((game, index) => {
-                    createGameItem(index, index);
-                });
-                
-                // 添加开头元素到末尾（用于循环）
-                for (let i = 0; i < 2; i++) {
-                    if (i < totalGames) {
-                        createGameItem(i, i + totalGames);
+                    const gameItem = document.createElement('div');
+                    gameItem.className = 'flex flex-col items-center transition-all duration-300 game-carousel-item cursor-pointer';
+                    gameItem.dataset.gameIndex = index;
+                    
+                    // 游戏图标
+                    const iconDiv = document.createElement('div');
+                    iconDiv.className = 'w-16 h-16 rounded-xl bg-gray-100 dark:bg-gray-700 flex items-center justify-center mb-2';
+                    
+                    if (game.icon) {
+                        if (game.icon === 'http-icon') {
+                            iconDiv.innerHTML = '<i class="fa-solid fa-globe text-2xl text-gray-500"></i>';
+                        } else {
+                            iconDiv.innerHTML = `<img src="${game.icon}" alt="${game.name}" class="w-12 h-12 object-cover rounded-lg">`;
+                        }
+                    } else {
+                        iconDiv.innerHTML = '<div class="w-12 h-12 border-2 border-dashed border-gray-400 rounded-lg flex items-center justify-center"><i class="fa-solid fa-gamepad text-gray-400 text-xl"></i></div>';
                     }
-                }
+                    
+                    // 游戏名称
+                    const nameDiv = document.createElement('div');
+                    nameDiv.className = 'text-sm font-medium text-gray-700 dark:text-gray-300 text-center';
+                    nameDiv.textContent = game.name;
+                    
+                    gameItem.appendChild(iconDiv);
+                    gameItem.appendChild(nameDiv);
+                    gameItem.addEventListener('click', () => {
+                        currentGameIndex = index;
+                        updateGameCarousel();
+                        loadGameDetail(currentGameIndex);
+                    });
+                    gameCarouselContainer.appendChild(gameItem);
+                });
                 
                 updateGameCarousel();
             }
             
-            // 创建游戏项
-            function createGameItem(originalIndex, displayIndex) {
-                const game = games[originalIndex];
-                const gameItem = document.createElement('div');
-                gameItem.className = 'flex flex-col items-center transition-all duration-300 game-carousel-item absolute';
-                gameItem.dataset.originalIndex = originalIndex;
-                gameItem.dataset.displayIndex = displayIndex;
-                
-                // 游戏图标
-                const iconDiv = document.createElement('div');
-                iconDiv.className = 'w-16 h-16 rounded-xl bg-gray-100 dark:bg-gray-700 flex items-center justify-center mb-2';
-                
-                if (game.icon) {
-                    if (game.icon === 'http-icon') {
-                        iconDiv.innerHTML = '<i class="fa-solid fa-globe text-2xl text-gray-500"></i>';
-                    } else {
-                        iconDiv.innerHTML = `<img src="${game.icon}" alt="${game.name}" class="w-12 h-12 object-cover rounded-lg">`;
-                    }
-                } else {
-                    iconDiv.innerHTML = '<div class="w-12 h-12 border-2 border-dashed border-gray-400 rounded-lg flex items-center justify-center"><i class="fa-solid fa-gamepad text-gray-400 text-xl"></i></div>';
-                }
-                
-                // 游戏名称
-                const nameDiv = document.createElement('div');
-                nameDiv.className = 'text-sm font-medium text-gray-700 dark:text-gray-300 text-center';
-                nameDiv.textContent = game.name;
-                
-                gameItem.appendChild(iconDiv);
-                gameItem.appendChild(nameDiv);
-                gameItem.addEventListener('click', () => {
-                    currentGameIndex = originalIndex;
-                    updateGameCarousel();
-                    loadGameDetail(currentGameIndex);
-                });
-                gameCarouselContainer.appendChild(gameItem);
-            }
-            
-            // 更新游戏轮播显示
+            // 更新游戏滑动选择器显示
             function updateGameCarousel() {
                 const items = gameCarouselContainer.querySelectorAll('.game-carousel-item');
-                const maxVisible = window.innerWidth < 768 ? 3 : 5; // 手机显示3个，电脑显示5个
-                const containerWidth = gameCarouselContainer.offsetWidth;
-                const itemWidth = 80; // 每个游戏项的宽度（包括间距）
                 
-                // 计算中心位置
-                const centerPosition = containerWidth / 2;
-                
-                items.forEach((item) => {
-                    const displayIndex = parseInt(item.dataset.displayIndex);
-                    const distance = displayIndex - currentGameIndex;
-                    
-                    // 计算位置
-                    const position = centerPosition + (distance * itemWidth);
-                    
-                    // 计算缩放和透明度
-                    const absDistance = Math.abs(distance);
-                    const scale = Math.max(0.5, 1 - (absDistance * 0.2));
-                    const opacity = Math.max(0.2, 1 - (absDistance * 0.3));
-                    
-                    // 应用样式
-                    item.style.left = `${position}px`;
-                    item.style.transform = `scale(${scale})`;
-                    item.style.opacity = opacity;
-                    item.style.zIndex = maxVisible - absDistance;
-                    
-                    // 隐藏超出可见范围的项
-                    if (absDistance > maxVisible) {
-                        item.style.display = 'none';
+                items.forEach((item, index) => {
+                    if (index === currentGameIndex) {
+                        // 当前选中项
+                        item.style.transform = 'scale(1.1)';
+                        item.style.opacity = '1';
+                        item.style.fontWeight = '600';
+                        item.style.color = 'var(--primary-color)';
                     } else {
-                        item.style.display = 'flex';
+                        // 其他项
+                        item.style.transform = 'scale(0.9)';
+                        item.style.opacity = '0.6';
+                        item.style.fontWeight = 'normal';
+                        item.style.color = '';
                     }
                 });
-                
-                // 检查是否需要无缝跳转
-                checkSeamlessTransition();
-            }
-            
-            // 检查并执行无缝跳转
-            function checkSeamlessTransition() {
-                const items = gameCarouselContainer.querySelectorAll('.game-carousel-item');
-                const totalGames = games.length;
-                
-                // 如果当前索引接近边界，进行无缝跳转
-                if (currentGameIndex <= 1) {
-                    // 跳转到末尾的复制项
-                    setTimeout(() => {
-                        currentGameIndex += totalGames;
-                        updateGameCarousel();
-                    }, 300);
-                } else if (currentGameIndex >= totalGames + 1) {
-                    // 跳转到开头的复制项
-                    setTimeout(() => {
-                        currentGameIndex -= totalGames;
-                        updateGameCarousel();
-                    }, 300);
-                }
             }
             
             // 加载游戏详情
@@ -1304,8 +1239,8 @@
                         <button id="game-carousel-prev" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors">
                             <i class="fa-solid fa-chevron-left text-xl"></i>
                         </button>
-                        <div id="game-carousel-container" class="relative flex items-center justify-center h-24 overflow-hidden max-w-full mx-auto" style="width: 400px;">
-                            <!-- 游戏图标轮播内容将通过JavaScript动态生成 -->
+                        <div id="game-carousel-container" class="flex items-center justify-center space-x-4 overflow-x-auto py-4">
+                            <!-- 游戏图标滑动选择器内容将通过JavaScript动态生成 -->
                         </div>
                         <button id="game-carousel-next" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors">
                             <i class="fa-solid fa-chevron-right text-xl"></i>
