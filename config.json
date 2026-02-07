@@ -78,58 +78,16 @@
   ],
   "games": [
     {
-      "name": "原神",
-      "description": "开放世界冒险RPG",
-      "icon": "images/games/genshin-impact.png",
-      "details_file": "games/genshin-impact.md"
-    },
-    {
       "name": "崩坏：星穹铁道",
       "description": "太空科幻RPG",
-      "icon": "images/games/honkai-star-rail.png",
-      "details_file": "games/honkai-star-rail.md"
+      "icon": "https://ts3.tc.mm.bing.net/th/id/ODF.VtQbqaoOiDvFRkfE-Qcf5A?w=32&h=32&qlt=90&pcl=fffffc&o=6&pid=1.2",
+      "details_file": "games/崩坏：星穹铁道.md"
     },
     {
-      "name": "崩坏3",
-      "description": "动作角色扮演游戏",
-      "icon": "images/games/honkai-3.png",
-      "details_file": "games/honkai-3.md"
-    },
-    {
-      "name": "明日方舟",
-      "description": "塔防策略游戏",
-      "icon": "images/games/arknights.png",
-      "details_file": "games/arknights.md"
-    },
-    {
-      "name": "碧蓝航线",
-      "description": "二次元战舰收集游戏",
-      "icon": "images/games/azur-lane.png",
-      "details_file": "games/azur-lane.md"
-    },
-    {
-      "name": "公主连结",
-      "description": "二次元RPG手游",
-      "icon": "images/games/princess-connect.png",
-      "details_file": "games/princess-connect.md"
-    },
-    {
-      "name": "Fate/Grand Order",
-      "description": "命运冠位指定",
-      "icon": "images/games/fgo.png",
-      "details_file": "games/fgo.md"
-    },
-    {
-      "name": "阴阳师",
-      "description": "和风RPG手游",
-      "icon": "images/games/onmyoji.png",
-      "details_file": "games/onmyoji.md"
-    },
-    {
-      "name": "王者荣耀",
-      "description": "MOBA竞技游戏",
-      "icon": "images/games/honor-of-kings.png",
-      "details_file": "games/honor-of-kings.md"
+      "name": "明日方舟:终末地",
+      "description": "鹰角网络自研的3D即时策略RPG，玩家将作为终末地工业的管理员，逐步探索塔卫二，揭开属于这颗星球的秘密，保卫和拓展人类文明的边疆。/n“‘零号委托’现已发出。请您确认，是否接受委托，以管理员的身份加入终末地工业，利用集成工业科技技术，和干员们一道，开拓人类新的家园？”",
+      "icon": "https://ts1.tc.mm.bing.net/th?id=OCBZA.B5236ACCFB32DC9A827F775C118A912669DD34337B368CD6008E91C01659BF80E&pid=BZA&rs=0",
+      "details_file": "games/明日方舟:终末地.md"
     }
   ]
 }
