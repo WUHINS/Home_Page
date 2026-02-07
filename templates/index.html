@@ -362,35 +362,61 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* 模态对话框动画 */
+        /* 模态对话框动画 - 优化版 */
         .modal-enter {
-            animation: modalFadeIn 0.3s ease-out forwards;
+            animation: modalFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         
         .modal-leave {
-            animation: modalFadeOut 0.2s ease-in forwards;
+            animation: modalFadeOut 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
         }
         
         @keyframes modalFadeIn {
-            from {
+            0% {
                 opacity: 0;
-                transform: scale(0.7);
+                transform: scale(0.8) translateY(-20px);
             }
-            to {
+            50% {
+                transform: scale(1.02);
+            }
+            100% {
                 opacity: 1;
-                transform: scale(1);
+                transform: scale(1) translateY(0);
             }
         }
         
         @keyframes modalFadeOut {
-            from {
+            0% {
                 opacity: 1;
-                transform: scale(1);
+                transform: scale(1) translateY(0);
             }
-            to {
+            50% {
+                transform: scale(1.02);
+            }
+            100% {
                 opacity: 0;
-                transform: scale(0.9);
+                transform: scale(0.8) translateY(20px);
             }
+        }
+        
+        /* 模态框按钮样式优化 */
+        #show-recent-projects-btn, #show-online-services-btn {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        #show-recent-projects-btn:hover, #show-online-services-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        #close-modal-btn {
+            transition: all 0.3s ease;
+        }
+        
+        #close-modal-btn:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+            transform: scale(1.05);
         }
         .readme-content {
             animation: slideIn 0.8s ease-out;
@@ -684,23 +710,28 @@
                 </div>
                 
                 <!-- 项目类型选择模态对话框 -->
-                <div id="project-type-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-                    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-md mx-4 glass-panel">
-                        <h3 class="text-xl font-bold mb-4 text-center">选择项目类型</h3>
-                        <div class="space-y-3">
-                            <button id="show-recent-projects-btn" class="w-full p-4 bg-gray-100 dark:bg-gray-700 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors flex items-center justify-between">
-                                <span class="font-medium">最近项目</span>
-                                <i class="fa-solid fa-folder-open text-primary dark:text-primary-dark"></i>
-                            </button>
-                            <button id="show-online-services-btn" class="w-full p-4 bg-gray-100 dark:bg-gray-700 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors flex items-center justify-between">
-                                <span class="font-medium">在线服务</span>
-                                <i class="fa-solid fa-cloud text-primary dark:text-primary-dark"></i>
-                            </button>
-                        </div>
-                        <div class="mt-6 text-center">
-                            <button id="close-modal-btn" class="px-4 py-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
-                                取消
-                            </button>
+                <div id="project-type-modal" class="fixed inset-0 z-50 hidden">
+                    <!-- 背景遮罩层 -->
+                    <div id="modal-backdrop" class="absolute inset-0 bg-black opacity-0"></div>
+                    <!-- 模态框内容 -->
+                    <div class="relative flex items-center justify-center min-h-screen p-4">
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-md glass-panel transform scale-90 opacity-0">
+                            <h3 class="text-xl font-bold mb-4 text-center">选择项目类型</h3>
+                            <div class="space-y-3">
+                                <button id="show-recent-projects-btn" class="w-full p-4 bg-gray-100 dark:bg-gray-700 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-300 flex items-center justify-between transform hover:scale-105">
+                                    <span class="font-medium">最近项目</span>
+                                    <i class="fa-solid fa-folder-open text-primary dark:text-primary-dark"></i>
+                                </button>
+                                <button id="show-online-services-btn" class="w-full p-4 bg-gray-100 dark:bg-gray-700 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-300 flex items-center justify-between transform hover:scale-105">
+                                    <span class="font-medium">在线服务</span>
+                                    <i class="fa-solid fa-cloud text-primary dark:text-primary-dark"></i>
+                                </button>
+                            </div>
+                            <div class="mt-6 text-center">
+                                <button id="close-modal-btn" class="px-4 py-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors duration-300">
+                                    取消
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -901,27 +932,44 @@
             const onlineServicesContent = document.getElementById('online-services-content');
             const currentProjectType = document.getElementById('current-project-type');
             const projectTypeModal = document.getElementById('project-type-modal');
+            const modalBackdrop = document.getElementById('modal-backdrop');
+            const modalContent = projectTypeModal.querySelector('.glass-panel');
             const showRecentProjectsBtn = document.getElementById('show-recent-projects-btn');
             const showOnlineServicesBtn = document.getElementById('show-online-services-btn');
             const closeModalBtn = document.getElementById('close-modal-btn');
             
             // 点击标题打开模态对话框（带动画）
             projectsHeader.addEventListener('click', () => {
-                // 先显示遮罩层
+                // 显示模态框容器
                 projectTypeModal.classList.remove('hidden');
-                // 然后延迟显示模态框，创建遮罩先出现的效果
+                
+                // 背景遮罩动画
                 setTimeout(() => {
-                    projectTypeModal.classList.add('modal-enter');
+                    modalBackdrop.classList.add('modal-backdrop');
+                }, 10);
+                
+                // 模态框内容动画
+                setTimeout(() => {
+                    modalContent.classList.add('modal-enter');
                 }, 50);
             });
             
             // 关闭模态对话框（带动画）
             function closeProjectTypeModal() {
-                projectTypeModal.classList.add('modal-leave');
+                // 模态框内容退出动画
+                modalContent.classList.remove('modal-enter');
+                modalContent.classList.add('modal-leave');
+                
+                // 背景遮罩退出动画
+                modalBackdrop.classList.remove('modal-backdrop');
+                modalBackdrop.classList.add('modal-backdrop-leave');
+                
+                // 延迟隐藏整个模态框
                 setTimeout(() => {
                     projectTypeModal.classList.add('hidden');
-                    projectTypeModal.classList.remove('modal-enter', 'modal-leave');
-                }, 200);
+                    modalContent.classList.remove('modal-leave');
+                    modalBackdrop.classList.remove('modal-backdrop-leave');
+                }, 300);
             }
             
             // 显示最近项目
